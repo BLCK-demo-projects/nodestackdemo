@@ -1,0 +1,34 @@
+<h1>{{ isEdit ? 'Edit song' : 'New song' }}</h1>
+
+<form class="song-form" (submit)="onSave(); $event.preventDefault()">
+  <mat-form-field appearance="outline">
+    <mat-label>Title</mat-label>
+    <input matInput [formField]="songForm.title" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Artist</mat-label>
+    <input matInput [formField]="songForm.artist" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Album</mat-label>
+    <input matInput [formField]="songForm.album" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Genre</mat-label>
+    <input matInput [formField]="songForm.genre" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Length (seconds)</mat-label>
+    <input matInput type="number" [formField]="songForm.durationSec" />
+  </mat-form-field>
+
+  <div class="actions">
+    <button matButton="filled" type="submit">Save</button>
+    <span class="spacer"></span>
+    <button matButton (click)="goBack()" type="button">Back</button>
+  </div>
+</form>

@@ -1,0 +1,57 @@
+<p class="total">{{ totalPlays() | number }} plays</p>
+
+<mat-form-field appearance="outline" class="search">
+  <mat-label>Search title or artist</mat-label>
+  <input matInput [formControl]="searchControl" type="text" />
+  <mat-icon matPrefix>search</mat-icon>
+</mat-form-field>
+
+@if (loading()) {
+  <p class="empty">Loading…</p>
+} @else if (tracks().length === 0) {
+  <p class="empty">No tracks found</p>
+} @else {
+  <table mat-table [dataSource]="tracks()" class="track-table">
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>Title</th>
+      <td mat-cell *matCellDef="let track">{{ track.title }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="artist">
+      <th mat-header-cell *matHeaderCellDef>Artist</th>
+      <td mat-cell *matCellDef="let track">{{ track.artist }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="album">
+      <th mat-header-cell *matHeaderCellDef>Album</th>
+      <td mat-cell *matCellDef="let track">{{ track.album }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="genre">
+      <th mat-header-cell *matHeaderCellDef>Genre</th>
+      <td mat-cell *matCellDef="let track">{{ track.genre }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="duration">
+      <th mat-header-cell *matHeaderCellDef>Length</th>
+      <td mat-cell *matCellDef="let track">{{ formatDuration(track.durationSec) }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="plays">
+      <th mat-header-cell *matHeaderCellDef>Plays</th>
+      <td mat-cell *matCellDef="let track">{{ track.playCount }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="play">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let track">
+        <button mat-icon-button (click)="play(track)" aria-label="Play track">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+}
